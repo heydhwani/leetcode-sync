@@ -2,21 +2,12 @@ class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
         int n = nums.size();
-        int i =0;
-        while(i<n && nums[i] != target){
-            i++;
-        } 
-        if(i==n){
-            return{-1,-1};
-        }
-        int j = i+1;
-        while(j<n && nums[j] == target){
-            j++;
-        }
         
+        int lb = lower_bound(nums.begin(), nums.end(), target) - nums.begin();
+        int up = upper_bound(nums.begin(), nums.end(), target) - nums.begin();
 
-        return {i,j-1};
+        if((lb == n ) || nums[lb] != target) return {-1,-1};
 
-        
+        return {lb, up-1};
     }
 };

@@ -1,0 +1,32 @@
+class Solution {
+public:
+    
+    bool canEatAll(vector<int>& piles, int mid, int h){
+        long long actualHours = 0;
+
+        for(int &x : piles){
+            actualHours += x / mid;
+            if(x % mid != 0){
+                actualHours++;
+            }
+        }
+
+        return actualHours <= h;
+    }
+
+    int minEatingSpeed(vector<int>& piles, int h) {
+        long long l = 1;
+        long long r = *max_element(piles.begin(), piles.end());
+
+        while(l <= r){
+            long long mid = l + (r - l) / 2;
+
+            if(canEatAll(piles, mid, h)){
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+};

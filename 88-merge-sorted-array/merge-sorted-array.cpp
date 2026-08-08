@@ -1,27 +1,30 @@
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        
-        int i = m - 1;
-        int j = n - 1;
-        int k = m + n - 1;
-        
-        while(i >= 0 && j >= 0) {
-            if(nums1[i] > nums2[j]) {
-                nums1[k] = nums1[i];
-                i--;
-            } else {
-                nums1[k] = nums2[j];
-                j--;
+
+        int left = m - 1;
+        int right = 0;
+
+        // nums1 ke bade elements ko nums2 ke chhote elements se swap
+        while (left >= 0 && right < n) {
+
+            if (nums1[left] > nums2[right]) {
+                swap(nums1[left], nums2[right]);
+                left--;
+                right++;
             }
-            k--;
+            else {
+                break;
+            }
         }
-        
-        // agar nums2 ke elements bache ho
-        while(j >= 0) {
-            nums1[k] = nums2[j];
-            j--;
-            k--;
+
+        // Dono arrays ko sort karo
+        sort(nums1.begin(), nums1.begin() + m);
+        sort(nums2.begin(), nums2.end());
+
+        // nums2 ko nums1 ke end mein copy karo
+        for (int i = 0; i < n; i++) {
+            nums1[m + i] = nums2[i];
         }
     }
 };
